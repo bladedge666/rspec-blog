@@ -10,6 +10,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'simple_form'
 
 gem 'rails-controller-testing'
+gem 'factory_girl_rails'
 
 
 # Use Puma as the app server
