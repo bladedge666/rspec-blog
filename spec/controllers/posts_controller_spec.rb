@@ -58,4 +58,53 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
+  describe "PUT #update" do
+    context "when the attributes are valid" do
+      it "updates the post" do
+        post = FactoryGirl.create(:post)
+        put :update, params: { id: post.id, post: FactoryGirl.attributes_for(:post, title: "New title", author: "Larry") }
+        post.reload
+        expect(post.title).to eq("New title")
+        expect(post.author).to eq("Larry")
+      end
+      
+      it "redirects to root_path" do
+        post = FactoryGirl.create(:post)
+        put :update, params: { id: post.id, post: FactoryGirl.attributes_for(:post, title: "New title", author: "Larry") }
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context "when the attributes are invalid" do
+      it "fails to update the post" do
+        post = FactoryGirl.create(:post)
+        put :update, params: { id: post.id, post: FactoryGirl.attributes_for(:post, title: "New title", author: "Larry", content: "Hi") }
+        post.reload
+        expect(post.title).to_not eq("New title")
+        expect(post.author).to_not eq("Larry")
+      end
+
+      it "renders the edit template" do
+        post = FactoryGirl.create(:post)
+        put :update, params: { id: post.id, post: FactoryGirl.attributes_for(:invalid_post) }
+        expect(response).to render_template :edit        
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do 
+    it "deletes the post" do
+      post = FactoryGirl.create(:post)
+      expect {
+        delete :destroy, params: { id: post.id }
+      }.to change(Post, :count).by(-1)
+    end
+
+    it "redirects to root_path" do
+      post = FactoryGirl.create(:post)
+      delete :destroy, params: { id: post.id }
+      expect(response).to redirect_to root_path
+    end
+  end
+
 end
