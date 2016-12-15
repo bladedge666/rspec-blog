@@ -1,9 +1,19 @@
-<h1>Post Details</h1>
-<hr>
-<div class="post-header">
-  <h2><%= @post.title %></h2>
-  by <%= @post.author %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
+      <h1>Post Details</h1>
+      <hr>
+      <div class="post-header">
+        <h2><%= @post.title %></h2>
+        by <%= @post.author %>
+      </div>
+      <p>
+        <%= @post.content %>
+      </p>
+      <ul class="post-links">
+       <li><%= link_to "Edit", edit_post_path(@post), class: "btn btn-sm btn-info" %></li>
+       <li><%= link_to "Delete", @post, method: :delete, class: "btn btn-sm btn-danger" %></li>
+     </ul>
+   </div>
+ </div>
 </div>
-<p>
-  <%= @post.content %>
-</p>
